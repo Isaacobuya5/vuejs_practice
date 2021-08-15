@@ -47,7 +47,7 @@
         <ul v-else>
             <!--View has two ways to adding dynamic classes in addition to v-bind syntax i.e. object(simpler) and array syntax-->
             <!-- though array syntax is more verbose, it allows adding more classes to an attribute-->
-            <li v-for="(item, index) in items" :key="item.id" @click="togglePurchase(item)" :class="{isStrikeout: item.purchased}">
+            <li v-for="(item, index) in reversedItems" :key="item.id" @click="togglePurchase(item)" :class="{isStrikeout: item.purchased}">
                 {{index}} {{item.label}}
             </li>
         </ul>
@@ -69,6 +69,7 @@
             <!-- we can use the @ symbol instead of the v-on: syntax-->
             <input @keyup.enter="items.push({id: items.length + 1, label: newItem})" type="text" v-model="newItem"
                 placeholder="Add an item"><br /><br />
+                <p class="counter">{{characterCount}}//200</p>
             <strong>Priority</strong>
             <label>
                 <input type="radio" name="priority" id="priority" v-model="newItemPriority" value="high">High</label>
@@ -143,6 +144,15 @@
                         "user-2": { name: "John Doe", age: 30, online: false },
                         "user-3": { name: "Nick James", age: 22, online: false }
                     }
+                }
+            },
+            //NOTE: Computed properties are only for transforming data and not changing the entire data
+            computed: {
+                characterCount() {
+                    return this.newItem.length
+                },
+                reversedItems() {
+                    return [...this.items].reverse()
                 }
             },
             methods: {
