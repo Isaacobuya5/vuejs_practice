@@ -26,7 +26,8 @@
         <!-- Remember to provide a key attribute that is unique-->
         <!-- we can also access the index of an item in our v-for-->
         <!-- v-for is also reactive i.e. when we push data to our array it shows up at the same time-->
-        <ul>
+        <p v-if="items.length === 0">There are no items save currently</p>
+        <ul v-else>
             <li v-for="(item, index) in items" :key="item.id">{{index}} {{item.label}}</li>
         </ul>
 
