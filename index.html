@@ -14,13 +14,26 @@
         <!-- NOTE that we can only evaluate one expression at a time-->
         <!-- We can't also declare variables or evaluate if statements within these templates-->
         <!-- but we can use a short hand i.e tenary operator-->
-        <h1>{{header.toLowerCase()}}</h1>
-        <h2>{{header ? "Welcome" : ""}}</h2>
+        <!-- <h1>{{header.toLowerCase()}}</h1>
+        <h2>{{header ? "Welcome" : ""}}</h2> -->
         <h2>{{header || "No header found"}}</h2>
         <!-- poweful vue reactivity system-->
         <!-- we can use v-model directive to bind our header to the input -->
         <!-- ensures the text in the input stays in sync with the header at all times-->
-        <input v-model="header">
+        <!-- <input v-model="header"> -->
+
+        <!-- Rendering list using v-for directive-->
+        <!-- Remember to provide a key attribute that is unique-->
+        <!-- we can also access the index of an item in our v-for-->
+      
+        <ul>
+            <li v-for="(item, index) in items" :key="item.id">{{index}} {{item.label}}</li>
+        </ul>
+
+          <!-- v-for can handle objects too -->
+          <ul>
+            <li v-for="(user, key) in users" :key="key">{{user.name}} - {{user.age}}</li>
+        </ul>
     </div>
     <script src="https://unpkg.com/vue@3"></script>
     <script>
@@ -32,7 +45,17 @@
             // the object that data returns is where we can store data for our view instances to use
             data() {
                 return {
-                    header: "Vue is ready to party"
+                    header: "Shopping List App",
+                    items: [
+                        {id: 1, label:"10 party hats"},
+                        {id: 2 ,label: "2 board games"},
+                        {id: 3, label: "28 cups"}
+                    ],
+                    users: {
+                        "user-1": {name: "Isaac Obuya", age: 25},
+                        "user-2": {name: "John Doe", age: 30},
+                        "user-3": {name: "Nick James", age: 22}
+                    }
                 }
             }
         }).mount("#shopping-list")
