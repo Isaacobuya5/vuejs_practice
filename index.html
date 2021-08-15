@@ -52,7 +52,7 @@
             <label><input type="radio" name="priority" id="priority" v-model="newItemPriority"
                     value="low">Low</label><br /><br />
             <!---use the v-on click to listen to click events on a button-->
-            <button v-on:click="items.push({id: items.length + 1, label: newItem})" class="btn btn-primary">
+            <button v-on:click="saveItem" class="btn btn-primary">
                 Save Item
             </button>
         </div>
@@ -113,6 +113,15 @@
                         "user-2": { name: "John Doe", age: 30 },
                         "user-3": { name: "Nick James", age: 22 }
                     }
+                }
+            },
+            methods: {
+                // here, we can add any methods that enscapulates specific functionalities for our view instance
+                //NOTE - inside our methods, we do not have automatic access to our Vue instance data as we did in the v-on
+                // instead we need to reference it using "this" key word
+                saveItem() {
+                    this.items.push({ id: this.items.length + 1, label: this.newItem })
+                    this.newItem = ""
                 }
             }
         }).mount("#shopping-list")
