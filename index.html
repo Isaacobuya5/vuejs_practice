@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice VueJS</title>
+</head>
+
+<body>
+    <div id="shopping-list">
+        <!-- we can get our data using Vue templating syntax-->
+        <h1>{{header}}</h1>
+        <!-- poweful vue reactivity system-->
+        <!-- we can use v-model directive to bind our header to the input -->
+        <!-- ensures the text in the input stays in sync with the header at all times-->
+        <input v-model="header">
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        // create our View instance
+        // pass an empty config object
+        //.mount tells Vue where to mount on our page
+        const shoppingList = Vue.createApp({
+            // display some vue data to the page
+            // the object that data returns is where we can store data for our view instances to use
+            data() {
+                return {
+                    header: "Vue is ready to party"
+                }
+            }
+        }).mount("#shopping-list")
+    </script>
+</body>
+
+</html>
