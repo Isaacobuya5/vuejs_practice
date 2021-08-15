@@ -37,32 +37,50 @@
 
         <!-- v-model also accepts modifiers e.g. v-model.lazy, v-model.number, v-model.trim-->
         <!-- v-model can be used for all form elements -->
-        <input type="text" v-model="newItem" placeholder="Add an item">
-        {{newItem}}
-        <strong>Priority</strong>
-        <label><input type="radio" name="priority" id="priority" v-model="newItemPriority" value="high">High</label>
-        <label><input type="radio" name="priority" id="priority" v-model="newItemPriority" value="low">Low</label><br/><br/>
+        <div class="add-item-form">
+            <!-- SUPPOSE we want to submit an item on enter rather than pressing the submit button-->
+            <!--- we can attach an event listener to the input using the v-on directive to listen to the key-up event-->
+            <!-- to ensure that we are clicking the Enter key and not any other key, we can use one of the Key modifiers-->
+            <!-- a key modifier is an event modifier that applies to keyboard based events -->
+            <!-- they allow us to alter the behaviours of events using a declarative syntax-->
+            <!-- we can use the @ symbol instead of the v-on: syntax-->
+            <input @keyup.enter="items.push({id: items.length + 1, label: newItem})" type="text" v-model="newItem"
+                placeholder="Add an item"><br /><br />
+            <strong>Priority</strong>
+            <label>
+                <input type="radio" name="priority" id="priority" v-model="newItemPriority" value="high">High</label>
+            <label><input type="radio" name="priority" id="priority" v-model="newItemPriority"
+                    value="low">Low</label><br /><br />
+            <!---use the v-on click to listen to click events on a button-->
+            <button v-on:click="items.push({id: items.length + 1, label: newItem})" class="btn btn-primary">
+                Save Item
+            </button>
+        </div>
         {{newItem}} | {{newItemPriority}}
 
         <div><label>
-            Preference
-            <select name="preference" id="preference" v-model="newItemPriority">
-                <option value="high">High</option>
-                <option value="low">Low</option>
-        </select>
-        </label><br/><br/>
+                Preference
+                <select name="preference" id="preference" v-model="newItemPriority">
+                    <option value="high">High</option>
+                    <option value="low">Low</option>
+                </select>
+            </label><br /><br />
 
-        <label> Is Favorite
-            <input type="checkbox" name="isFavorite" id="isFavorite" v-model="isFavorite">
+            <label> Is Favorite
+                <input type="checkbox" name="isFavorite" id="isFavorite" v-model="isFavorite">
             </label>
             {{isFavorite}}
         </div>
 
         <!-- We can use checkboxes to collect multiple values from user-->
-        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages" value="java">Java</label>
-        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages" value="python">Python</label>
-        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages" value="php">PHP</label>
-        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages" value="javascript">JavaScript</label><br/><br/>
+        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages"
+                value="java">Java</label>
+        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages"
+                value="python">Python</label>
+        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages"
+                value="php">PHP</label>
+        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages"
+                value="javascript">JavaScript</label><br /><br />
 
         <p>My favorite programming languages are:</p>
         <ul>
