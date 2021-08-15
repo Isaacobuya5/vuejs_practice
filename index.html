@@ -20,19 +20,53 @@
         <!-- poweful vue reactivity system-->
         <!-- we can use v-model directive to bind our header to the input -->
         <!-- ensures the text in the input stays in sync with the header at all times-->
-        <!-- <input v-model="header"> -->
+        <input v-model="header">
 
         <!-- Rendering list using v-for directive-->
         <!-- Remember to provide a key attribute that is unique-->
         <!-- we can also access the index of an item in our v-for-->
-      
+        <!-- v-for is also reactive i.e. when we push data to our array it shows up at the same time-->
         <ul>
             <li v-for="(item, index) in items" :key="item.id">{{index}} {{item.label}}</li>
         </ul>
 
-          <!-- v-for can handle objects too -->
-          <ul>
+        <!-- v-for can handle objects too -->
+        <ul>
             <li v-for="(user, key) in users" :key="key">{{user.name}} - {{user.age}}</li>
+        </ul>
+
+        <!-- v-model also accepts modifiers e.g. v-model.lazy, v-model.number, v-model.trim-->
+        <!-- v-model can be used for all form elements -->
+        <input type="text" v-model="newItem" placeholder="Add an item">
+        {{newItem}}
+        <strong>Priority</strong>
+        <label><input type="radio" name="priority" id="priority" v-model="newItemPriority" value="high">High</label>
+        <label><input type="radio" name="priority" id="priority" v-model="newItemPriority" value="low">Low</label><br/><br/>
+        {{newItem}} | {{newItemPriority}}
+
+        <div><label>
+            Preference
+            <select name="preference" id="preference" v-model="newItemPriority">
+                <option value="high">High</option>
+                <option value="low">Low</option>
+        </select>
+        </label><br/><br/>
+
+        <label> Is Favorite
+            <input type="checkbox" name="isFavorite" id="isFavorite" v-model="isFavorite">
+            </label>
+            {{isFavorite}}
+        </div>
+
+        <!-- We can use checkboxes to collect multiple values from user-->
+        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages" value="java">Java</label>
+        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages" value="python">Python</label>
+        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages" value="php">PHP</label>
+        <label><input type="checkbox" name="programming" id="programming" v-model="favoriteProgrammingLanguages" value="javascript">JavaScript</label><br/><br/>
+
+        <p>My favorite programming languages are:</p>
+        <ul>
+            <li v-for="(language, index) in favoriteProgrammingLanguages" :key="index">{{language}}</li>
         </ul>
     </div>
     <script src="https://unpkg.com/vue@3"></script>
@@ -44,17 +78,22 @@
             // display some vue data to the page
             // the object that data returns is where we can store data for our view instances to use
             data() {
+                //$vm.data.items.push({id: 4, label: $vm.data.newItem})
                 return {
                     header: "Shopping List App",
                     items: [
-                        {id: 1, label:"10 party hats"},
-                        {id: 2 ,label: "2 board games"},
-                        {id: 3, label: "28 cups"}
+                        { id: 1, label: "10 party hats" },
+                        { id: 2, label: "2 board games" },
+                        { id: 3, label: "28 cups" }
                     ],
+                    newItem: "",
+                    newItemPriority: "low",
+                    isFavorite: false,
+                    favoriteProgrammingLanguages: [],
                     users: {
-                        "user-1": {name: "Isaac Obuya", age: 25},
-                        "user-2": {name: "John Doe", age: 30},
-                        "user-3": {name: "Nick James", age: 22}
+                        "user-1": { name: "Isaac Obuya", age: 25 },
+                        "user-2": { name: "John Doe", age: 30 },
+                        "user-3": { name: "Nick James", age: 22 }
                     }
                 }
             }
