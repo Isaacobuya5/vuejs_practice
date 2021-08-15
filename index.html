@@ -6,6 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practice VueJS</title>
+    <style>
+        .isStrikeout {
+            color: blue;
+        }
+
+        .youngerUsers {
+            color: green;
+        }
+
+        .text-bold {
+            font-weight: 600;
+        }
+
+        .active-users {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,12 +45,17 @@
         <!-- v-for is also reactive i.e. when we push data to our array it shows up at the same time-->
         <p v-if="items.length === 0">There are no items save currently</p>
         <ul v-else>
-            <li v-for="(item, index) in items" :key="item.id">{{index}} {{item.label}}</li>
+            <!--View has two ways to adding dynamic classes in addition to v-bind syntax i.e. object(simpler) and array syntax-->
+            <!-- though array syntax is more verbose, it allows adding more classes to an attribute-->
+            <li v-for="(item, index) in items" :key="item.id" @click="togglePurchase(item)" :class="{isStrikeout: item.purchased}">
+                {{index}} {{item.label}}
+            </li>
         </ul>
 
         <!-- v-for can handle objects too -->
         <ul>
-            <li v-for="(user, key) in users" :key="key">{{user.name}} - {{user.age}}</li>
+            <li v-for="(user, key) in users" :key="key" :class="[user.age < 30 ? 'youngerUsers text-bold' : '',
+            user.online ? 'active-users': '', applies-all]">{{user.name}} - {{user.age}}</li>
         </ul>
 
         <!-- v-model also accepts modifiers e.g. v-model.lazy, v-model.number, v-model.trim-->
@@ -54,6 +76,8 @@
                     value="low">Low</label><br /><br />
             <!---use the v-on click to listen to click events on a button-->
             <!-- v-bind can also be shortened to a :-->
+            <!--View has two ways to adding dynamic classes in addition to v-bind syntax i.e. object(simpler) and array syntax-->
+            <!--it's possible to toggle multiple classes with both the syntaxes-->
             <button :disabled="newItem.length === 0" v-on:click="saveItem" class="btn btn-primary">
                 Save Item
             </button>
@@ -106,18 +130,18 @@
                 return {
                     header: "Shopping List App",
                     items: [
-                        { id: 1, label: "10 party hats" },
-                        { id: 2, label: "2 board games" },
-                        { id: 3, label: "28 cups" }
+                        { id: 1, label: "10 party hats", purchased: true },
+                        { id: 2, label: "2 board games", purchased: false },
+                        { id: 3, label: "28 cups", purchased: true }
                     ],
                     newItem: "",
                     newItemPriority: "low",
                     isFavorite: false,
                     favoriteProgrammingLanguages: [],
                     users: {
-                        "user-1": { name: "Isaac Obuya", age: 25 },
-                        "user-2": { name: "John Doe", age: 30 },
-                        "user-3": { name: "Nick James", age: 22 }
+                        "user-1": { name: "Isaac Obuya", age: 25, online: true },
+                        "user-2": { name: "John Doe", age: 30, online: false },
+                        "user-3": { name: "Nick James", age: 22, online: false }
                     }
                 }
             },
@@ -128,6 +152,9 @@
                 saveItem() {
                     this.items.push({ id: this.items.length + 1, label: this.newItem })
                     this.newItem = ""
+                },
+                togglePurchase(item) {
+                    item.purchased = !item.purchased
                 }
             }
         }).mount("#shopping-list")
